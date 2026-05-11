@@ -14,18 +14,18 @@ public class Main {
     public static void main(String[] args) {
         loadAllAccounts(); // Load everyone into memory first
 
-        System.out.println("Simple Bank Application by Charalampos-Raphael Ntavelidis");
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
+       System.out.println("Simple Bank Application by Charalampos-Raphael Ntavelidis");
+       System.out.print("Enter name: ");
+       String name = scanner.nextLine();
 
-        System.out.print("Enter 4-digit PIN: ");
-        String pinInput = scanner.next();
+       System.out.print("Enter 4-digit PIN: ");
+       String pinInput = scanner.next();
 
-        // Check if user exists in our Map
-        Account userAccount = allAccounts.get(name.toLowerCase());
+       // Check if user exists in our Map
+       Account userAccount = allAccounts.get(name.toLowerCase());
 
-        if (userAccount == null) {
-            System.out.println("No account found. Creating new account for: " + name);
+       if (userAccount == null) {
+           System.out.println("No account found. Creating new account for: " + name);
             userAccount = new Account(name, pinInput, 0.0);
             allAccounts.put(name.toLowerCase(), userAccount);
         } else {
