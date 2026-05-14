@@ -48,6 +48,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return name + "," + pin + "," + balance;
+        return "STANDARD" + "," + name + "," + pin + "," + balance;
     }
 }
