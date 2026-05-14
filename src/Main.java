@@ -51,12 +51,12 @@ public class Main {
             System.out.println("\n--- MENU ---");
             System.out.println("1. Deposit\n2. Withdraw\n3. Balance");
             if (userAccount instanceof SavingsAccount) {
-                System.out.println("4. Apply Interest\n");
-                System.out.println("5. Statement\n 6. Exit");
+                System.out.println("4. Apply Interest");
+                System.out.println("5. Statement\n6. Exit");
                 totalOperations = 6;
                 isSavings = true;
             } else {
-                System.out.println("4. Statement\n 5. Exit");
+                System.out.println("4. Statement\n5. Exit");
                 totalOperations = 5;
             }
             System.out.print("Choice: ");
