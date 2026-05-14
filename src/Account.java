@@ -4,7 +4,7 @@ import java.util.List;
 public class Account {
     private String name;
     private String pin; // Stored as String to handle leading zeros (e.g., 0012)
-    private double balance;
+    protected double balance;
     private List<String> transactionHistory;
 
     public Account(String name, String pin, double balance) {
@@ -36,7 +36,7 @@ public class Account {
         return false;
     }
 
-    private void addLog(String message) {
+    protected void addLog(String message) {
         String timestamp = new java.util.Date().toString();
         transactionHistory.add("[" + timestamp + "] " + message);
     }
