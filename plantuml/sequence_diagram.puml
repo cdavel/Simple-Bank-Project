@@ -1,0 +1,72 @@
+@startuml
+autonumber
+
+actor "Customer" as user
+
+box "Application Core" #LightBlue
+    participant "BankApp (UI)" as app
+    participant "Scanner Engine" as regex
+    database "allAccounts (HashMap)" as map
+end box
+
+box "Domain Models" #LightYellow
+    participant "userAccount : SavingsAccount" as sav
+    participant "super : Account" as acc
+end box
+
+== Registration Phase ==
+user -> app : Requests Account Creation
+activate app
+
+loop Until input matches 4 digits
+    app -> user : Prompt: "Create a 4-digit PIN"
+    user -> app : Input PIN String
+    app -> regex : matches("\\d{4}")
+    activate regex
+    regex --> app : Return Boolean
+    deactivate regex
+
+    alt False
+        app -> user : Error: "PIN must be exactly 4 digits"
+    end
+end
+
+app -> user : "Choose Account Type: (1) Standard (2) Savings"
+user -> app : Enters Selection (Option 2)
+
+create sav
+app -> sav : new SavingsAccount(name, pin, 0.0)
+activate sav
+sav -> acc : super(name, pin, 0.0)
+activate acc
+acc --> sav : Base state initialized
+deactivate acc
+sav --> app : Savings instance returned
+deactivate sav
+
+app -> map : put(name, userAccount)
+
+== Dynamic Menu Loop ==
+loop running == true
+    app -> app : Check (userAccount instanceof SavingsAccount)
+
+    alt isSavings == true
+        app -> user : Display Savings Menu (Options 1-6)
+        user -> app : Selects Option 4 (Apply Interest)
+        app -> sav : applyInterest()
+        activate sav
+        sav -> sav : balance updates
+        sav --> app : Success
+        deactivate sav
+    else isSavings == false
+        app -> user : Display Standard Menu (Options 1-5)
+        user -> app : Selects Option 4 (Statement)
+        app -> acc : getTransactionHistory()
+        activate acc
+        acc --> app : Return history list
+        deactivate acc
+    end
+end
+
+deactivate app
+@enduml

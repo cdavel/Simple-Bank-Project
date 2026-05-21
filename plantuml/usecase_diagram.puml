@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+
+' Defining our actors and their structural relationship
+actor "Visitor" as visitor
+actor "Logged-In Customer" as customer
+
+' Inheritance: A Logged-In Customer can do everything a Visitor can do
+customer -up-|> visitor
+
+rectangle "Bank Application System" {
+    ' Open features
+    usecase "Create New Account" as UC_Register
+    usecase "Select Account Type" as UC_Type
+    usecase "Authenticate via PIN (Login)" as UC_Login
+
+    ' Protected features (Inside the secure session)
+    usecase "Deposit Funds" as UC_Deposit
+    usecase "Withdraw Funds" as UC_Withdraw
+    usecase "Check Balance" as UC_Balance
+    usecase "View Transaction History" as UC_Statement
+    usecase "Apply Interest" as UC_Interest
+}
+
+' What the basic visitor can do
+visitor --> UC_Register
+visitor --> UC_Login
+
+' Account creation strictly includes picking a type
+UC_Register ..> UC_Type : <<include>>
+
+' What the authenticated customer can do
+customer --> UC_Deposit
+customer --> UC_Withdraw
+customer --> UC_Balance
+customer --> UC_Statement
+customer --> UC_Interest
+
+note right of UC_Interest
+  Accessible only if
+  account is SavingsAccount
+end note
+
+@enduml
