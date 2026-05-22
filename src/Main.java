@@ -21,12 +21,16 @@ public class Main {
        String pinInput;
        while (true) {
            System.out.print("Create a 4-digit PIN: ");
-           pinInput = scanner.next();
+           pinInput = scanner.nextLine().trim();
 
            // We use RegEx to figure out if the pin is exactly 4 characters long
            // and in decimal values (0-9). There are better ways to do this,
            // but I am lazy
-           if (pinInput.matches("\\d{4}"))   {
+           if (pinInput.trim().isEmpty() || pinInput == null) {
+               System.out.println("Invalid PIN! PIN cannot be whitespace!");
+               continue;
+           } else
+           if (pinInput.matches("^\\d{4}$"))   {
                break;
            } else {
                System.out.println("Invalid PIN! The Length must be 4");
