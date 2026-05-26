@@ -15,8 +15,27 @@ public class Main {
         loadAllAccounts(); // Load everyone into memory first
 
        System.out.println("Simple Bank Application by Charalampos-Raphael Ntavelidis");
-       System.out.print("Enter name: ");
-       String name = scanner.nextLine();
+           String name = "";
+           while (true) {
+            System.out.print("Enter your name: ");
+
+            name = scanner.nextLine();
+
+            if (name == null || name.trim().isEmpty()) {
+                System.out.println("Error: Name cannot be blank. Please try again.\n");
+                continue;
+            }
+
+            name = name.trim();
+
+            if (name.matches("^[a-zA-Z\\s]+$")) {
+                break;
+            } else {
+                System.out.println("Error: Name must contain letters and spaces only (No commas, numbers, or symbols).\n");
+            }
+           }
+
+            System.out.println("Name accepted: " + name);
 
        String pinInput;
        while (true) {
